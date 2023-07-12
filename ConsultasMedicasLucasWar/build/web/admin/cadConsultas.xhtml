@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Cadastro de Constultas Médicas</title>
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/styles/style.css" />
+    </h:head>
+    <h:body>
+        <h:form>
+            <h2>Faça sua consulta médica:</h2>
+            <p:panelGrid columns="2">
+
+                <p:outputLabel value="Especialidades"/>
+                <p:selectOneMenu required="true" requiredMessage="Especialidade obrigatória" value="#{buscaBean.especialidadeSelecionada}" 
+                                 converter="#{especialidadeConverter}">
+                    <f:selectItems value="#{buscaBean.especialidades}"/>
+                    <p:ajax event="change" update="cbMedicos" immediate="true"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Medicos"/>
+                <p:selectOneMenu required="true" requiredMessage="Medico obrigatório" id="cbMedicos" value="#{buscaBean.medicoSelecionado}" 
+                                 converter="#{medicoConverter}">
+                    <f:selectItems value="#{buscaBean.medicos}"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Nome do paciente"/>
+                <p:inputText required="true" requiredMessage="Nome do paciente obrigatório" value="#{buscaBean.nomePaciente}"/>
+
+                <p:outputLabel value="Telefone"/>
+                <p:inputText required="true" requiredMessage="Telefone obrigatório" value="#{buscaBean.telefone}"/>
+
+                <p:outputLabel value="Data e Hora"/>
+                <p:calendar required="true" requiredMessage="Data obrigatória" pattern="dd/MM/yyyy HH:mm" value="#{buscaBean.dataHora}"/>
+
+            </p:panelGrid>
+
+            <p:commandButton action="#{buscaBean.agendarConsulta}" value="Agendar consulta" ajax="false"/>
+
+        </h:form>
+        <h:messages/>
+
+        <a id="link" href="#{facesContext.externalContext.requestContextPath}/faces/buscaConsultas.xhtml">Acessar busca de consultas </a>
+    </h:body>
+</html>
+

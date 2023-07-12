@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Consultas Médicas</title>
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/styles/style.css" />
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:commandButton action="#{userBean.fazerLogout()}" value="Fazer logout" ajax="false"/>
+
+            <h2>Busca de consultas:</h2>
+            <p:panelGrid columns="2">
+                <p:outputLabel value="Especialidades"/>
+                <p:selectOneMenu value="#{buscaBean.especialidadeSelecionada}" 
+                                 converter="#{especialidadeConverter}">
+                    <f:selectItems value="#{buscaBean.especialidades}"/>
+                    <p:ajax event="change" update="cbMedicos" immediate="true"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Medicos"/>
+                <p:selectOneMenu id="cbMedicos" value="#{buscaBean.medicoSelecionado}" 
+                                 converter="#{medicoConverter}" >
+                    <f:selectItems value="#{buscaBean.medicos}" />
+                    <p:ajax event="change" update=":listaConsultas" immediate="true"/>
+                </p:selectOneMenu >
+            </p:panelGrid>
+        </h:form>
+        <p:dataTable id="listaConsultas" value="#{buscaBean.servicoConsulta}" var="consulta">
+            <p:column headerText="Especialidade">
+                <h:outputText value="#{consulta.medico.especialidade.descricao}"/>
+            </p:column>    
+
+            <p:column headerText="Medico">
+                <h:outputText value="#{consulta.medico.nome}"/>
+            </p:column>
+
+            <p:column headerText="Paciente">
+                <h:outputText value="#{consulta.nome_paciente}"/>
+            </p:column>                
+
+            <p:column headerText="Telefone">
+                <h:outputText value="#{consulta.telefone_paciente}"/>
+            </p:column>
+
+            <p:column headerText="Data">
+                <h:outputText value="#{consulta.data_hora}"/>
+            </p:column>
+
+            <p:column headerText="Ações">
+                <h:form>
+                    <p:commandButton value="X" action="#{userBean.cancelarConsulta(consulta)}" update=":listaConsultas" immediate="true" ajax="false"/>
+                </h:form>
+            </p:column>
+
+        </p:dataTable>
+
+        <h:form>
+            <p:commandButton action="#{userBean.acessarPaginaCadastroConsultas}" value="Cadastrar consultas" ajax="false"/>
+        </h:form>
+
+        <a id="link" href="#{facesContext.externalContext.requestContextPath}/faces/index.xhtml">Voltar para fazer login </a>
+        <h:messages/>
+    </h:body>
+</html>
+

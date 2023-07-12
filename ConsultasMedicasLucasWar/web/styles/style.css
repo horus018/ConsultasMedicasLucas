@@ -1,0 +1,21 @@
+a#link{
+    margin-top: 15px;
+    height: 30px;
+    display: flex;
+    width: fit-content;
+    padding: 2px 15px;
+    text-decoration: none;
+    align-items: center;
+    background: linear-gradient(45deg, #3cd5c075, #6070f96e);
+    color: black;
+    border-radius: 8px;
+    font-family: cursive;
+    transition: .3s;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+a#link:hover{
+    box-shadow: none;
+    background: linear-gradient(45deg, #4c8e9d61, #1d32e55e);
+}
+
